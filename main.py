@@ -19,7 +19,6 @@ G = [0, 2, 3, 4, 5, 6]
 AS = [0, 1, 2, 4, 5, 6, 7]
 CS = [0, 3, 4, 5, 7]
 DS = [0, 1, 2, 3, 4, 5, 7]
-ES = [0, 3, 4, 5, 6, 7]
 FS = [0, 4, 5, 6, 7]
 GS = [0, 2, 3, 4, 5, 6, 7]
 
@@ -76,19 +75,17 @@ def off():
 while True:
     for i in range(0,len(col)):
         col[i].low()
-        sleep(0.005) #settling time
+        sleep(0.005)
         for j in range(0,len(row)):
             pressed = not row[j].value()
-            if(pressed and (keypadState[j][i] != pressed)): #state changed to high
+            if(pressed and (keypadState[j][i] != pressed)):
                 keypadState[j][i] = pressed
-                #led.high()
                 speaker.duty_u16(2000)
                 speaker.freq(MusicNotes[KeyToNotes[keyName[j][i]]])
                 for v in NotesToDisplay[KeyToNotes[keyName[j][i]]]:
                     segment[v].high()
-            elif(not pressed and (keypadState[j][i] != pressed)): # state changed to low
+            elif(not pressed and (keypadState[j][i] != pressed)):
                 speaker.duty_u16(0)
                 keypadState[j][i] = pressed
                 off()
-                #led.low()
         col[i].high()
